@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0a0d12">
+<title>FARRUH AUDIO TRACK — Studio V7</title>
+<style>
+:root{color-scheme:dark;--bg:#0a0d12;--panel:#151b23;--panel2:#1b242e;--line:#303d49;--gold:#e6bf79;--gold2:#f6dfb2;--muted:#91a0ad;--mint:#69d5ac;--red:#ed6c72;--blue:#78b6e8}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% -22%,#394653 0,#1a232c 28%,#0a0d12 72%);color:#f2f3f5;font:14px/1.45 system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+main{max-width:780px;margin:auto;padding:12px 12px 42px}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:4px 3px 11px;color:#9eabb7;font-size:9px;letter-spacing:1.7px}
+.live{display:flex;align-items:center;gap:6px;color:var(--mint)}
+.live i{width:7px;height:7px;background:var(--mint);border-radius:50%;box-shadow:0 0 9px #69d5ac88}
+.hero{position:relative;overflow:hidden;border:1px solid #46515b;border-radius:22px;background:linear-gradient(145deg,#27333f,#111820 70%);padding:15px 14px 17px;box-shadow:0 18px 45px #0007}
+.hero:before{content:"";position:absolute;width:280px;height:280px;left:50%;top:-130px;transform:translateX(-50%);border:1px solid #e6bf791b;border-radius:50%;box-shadow:0 0 0 27px #e6bf7908,0 0 0 58px #e6bf7906}
+.hero-inner{position:relative;text-align:center}
+.mic{width:78px;height:83px;margin:1px auto 6px;filter:drop-shadow(0 5px 13px #0009)}
+.brand{font-size:clamp(22px,5vw,30px);line-height:1.1;letter-spacing:2px;color:#f4dfba;font-weight:850;margin:0}
+.brand-sub{font-size:9px;color:#aebbc5;letter-spacing:3px;margin-top:7px}
+.hero-tags{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:12px}
+.tag{border:1px solid #52606d;background:#10171dbb;border-radius:30px;padding:4px 9px;color:#c2ccd3;font-size:9px;letter-spacing:.9px}
+.tag.good{color:#a4edcf;border-color:#4a806f}
+.hero-copy{font-size:11px;color:#aab5bf;margin:9px auto 0;max-width:460px}
+.panel{background:linear-gradient(145deg,#1b242e,#121820);border:1px solid var(--line);border-radius:17px;padding:14px;margin:11px 0;box-shadow:0 9px 24px #0003}
+.panel-head{display:flex;align-items:center;gap:9px;margin-bottom:13px}
+.ico{width:29px;height:29px;display:grid;place-items:center;border-radius:9px;background:#302a20;border:1px solid #715d3d;color:var(--gold2);font-weight:800;font-size:14px;flex:none}
+h2{font-size:12px;letter-spacing:1.25px;color:#efd8af;margin:0;font-weight:800}
+.meta{margin-left:auto;color:#82919d;font-size:9px;letter-spacing:1px}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+button,.filebtn,select{background:#26313c;color:#eef1f4;border:1px solid #495866;border-radius:10px;padding:10px 12px;font-size:12px;font-weight:700;cursor:pointer}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.gold,.filebtn{background:linear-gradient(135deg,#efd39e,#c99b55);border-color:#e7c583;color:#171a1c}
+button.red{background:linear-gradient(135deg,#ef777a,#b7404c);border-color:#ea8586;color:white}
+button.soft{background:#121a22}
+input[type=file]{display:none}
+audio{width:100%;height:39px;margin-top:10px}
+.status{font-size:10px;color:var(--muted);line-height:1.5;margin-top:8px;min-height:15px}
+.screen{background:linear-gradient(180deg,#080f14,#0e171e);border:1px solid #34424d;border-radius:12px;padding:9px;margin-top:11px}
+.screenline{display:flex;justify-content:space-between;gap:8px;font-size:9px;letter-spacing:1px;color:#8ea0ad}
+canvas{width:100%;height:77px;display:block;margin-top:4px}
+.bars{height:6px;display:flex;gap:3px;margin-top:3px}
+.bars span{flex:1;border-radius:3px;background:#26343d}
+.bars span.on{background:linear-gradient(90deg,#55bf9a,#e4c37d);box-shadow:0 0 7px #70d3ae33}
+.transport{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.transport button{min-height:43px}
+.presets{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.presets button{font-size:10px;padding:11px 3px;letter-spacing:.2px}
+.control{margin:12px 0 0}
+.ctrl{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11px;color:#dce3e8;margin-bottom:5px}
+.val{font-variant-numeric:tabular-nums;color:var(--gold2);white-space:nowrap}
+input[type=range]{width:100%;height:20px;margin:0;accent-color:var(--gold)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.switch{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:4px 0 8px;color:#d7dfe5;font-size:11px}
+.switch input{width:18px;height:18px;accent-color:var(--gold)}
+.selectrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11px;color:#cbd4db}
+select{padding:9px;max-width:100%;font-size:11px}
+.pillinfo{font-size:9px;color:#9bd8bb;border:1px solid #416b5c;border-radius:30px;padding:4px 8px;margin-left:auto}
+.note{font-size:10px;line-height:1.55;color:#8d9aa5;margin:10px 0 0}
+.actiongrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.actiongrid button{min-height:44px}
+.divider{height:1px;background:#303d49;margin:13px 0}
+#advancedPanel [data-extra-preset]{margin:4px 3px 0 0;font-size:9px;padding:8px}.footer{text-align:center;padding:14px 0 0;color:#687783;font-size:9px;letter-spacing:1.7px}.creator-logo{display:block;width:68px;height:68px;object-fit:contain;margin:0 auto 9px;filter:drop-shadow(0 2px 8px #0008)}
+@media(max-width:390px){main{padding:9px 9px 30px}.panel{padding:12px}.hero{padding:13px 10px}.brand{letter-spacing:1.2px}.presets button{font-size:9px}.grid2{gap:7px}}
+</style>
+</head>
+<body>
+<main>
+<div class="topbar"><span>PERSONAL VOCAL PROCESSOR · V7</span><span class="live"><i></i> ENGINE READY</span></div>
+<header class="hero"><div class="hero-inner">
+<svg class="mic" viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="m1" x1="25" y1="8" x2="78" y2="88" gradientUnits="userSpaceOnUse"><stop stop-color="#f5e5c4"/><stop offset=".45" stop-color="#84929e"/><stop offset="1" stop-color="#303e49"/></linearGradient><linearGradient id="m2" x1="20" y1="20" x2="80" y2="100"><stop stop-color="#f4d69e"/><stop offset="1" stop-color="#aa7b40"/></linearGradient></defs>
+<rect x="34" y="5" width="32" height="66" rx="16" fill="url(#m1)" stroke="#e5c991" stroke-width="1.5"/>
+<path d="M37 20H63M35 29H65M35 38H65M35 47H65M37 56H63" stroke="#29343d" stroke-width="2.2"/>
+<path d="M23 47V54C23 72 35 85 50 85C65 85 77 72 77 54V47" stroke="url(#m2)" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M50 85V99M36 99H64M29 105H71" stroke="url(#m2)" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M23 52H16V65M77 52H84V65" stroke="#d4b276" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
+<img class="creator-logo" src="farhan_logo.png" alt="Farhan logo"><h1 class="brand">FARRUH AUDIO TRACK</h1>
+<div class="brand-sub">RECORD · PROCESS · MIX · EXPORT</div>
+<div class="hero-tags"><span class="tag good">● STEREO ENGINE</span><span class="tag">TEMPO LOCK</span><span class="tag">VOCAL FX</span></div>
+<p class="hero-copy">A mobile vocal studio with a rebuilt feedback delay, rhythmic ping-pong repeats and cleaner output staging.</p>
+</div></header>
+
+<section class="panel">
+<div class="panel-head"><span class="ico">01</span><h2>RECORDING DECK</h2><span class="meta">INPUT SOURCE</span></div>
+<div class="row">
+<button class="red" id="micStart">● RECORD VOICE</button><button id="micStop" disabled>■ STOP REC</button>
+<label class="filebtn" for="file">＋ IMPORT AUDIO</label><input id="file" type="file" accept="audio/*">
+</div>
+<div class="status" id="micStatus">Record a fresh take with microphone permission or import your existing voice recording.</div>
+<div class="screen"><div class="screenline"><span>MASTER METER / WAVEFORM</span><span id="levelText">PEAK —</span></div><canvas id="scope" width="700" height="120"></canvas><div class="bars" id="bars"></div></div>
+<audio id="player" controls></audio>
+<div class="transport"><button class="gold" id="play" disabled>▶ PLAY PROCESSED</button><button class="soft" id="stop" disabled>■ STOP PLAYBACK</button></div>
+<div class="status" id="status">No audio loaded.</div>
+<p class="note">For microphone recording, allow browser mic permission. Headphones are recommended for checking left/right movement.</p>
+</section>
+
+<section class="panel">
+<div class="panel-head"><span class="ico">✦</span><h2>QUICK SOUND</h2><span class="meta">PRESETS</span></div>
+<div class="presets"><button data-preset="clean">CLEAN VOICE</button><button data-preset="naat">WARM NAAT</button><button data-preset="wide">WIDE PING</button><button data-preset="slap">SLAP ECHO</button></div>
+<p class="note">Presets are starting points. Apply a preset, then press Play Processed.</p>
+</section>
+
+<section class="panel">
+<div class="panel-head"><span class="ico">02</span><h2>INPUT & VOICE TONE</h2><span class="meta">CLEAN FRONT END</span></div>
+<div class="control"><div class="ctrl"><span>Input Trim</span><span class="val" id="trimV"></span></div><input id="trim" type="range" min="-18" max="3" value="-6"></div>
+<div class="control"><div class="ctrl"><span>Low Rumble Cut</span><span class="val" id="hpfV"></span></div><input id="hpf" type="range" min="35" max="180" value="65"></div>
+<div class="grid2">
+<div class="control"><div class="ctrl"><span>Warmth</span><span class="val" id="warmV"></span></div><input id="warm" type="range" min="-5" max="5" value="1"></div>
+<div class="control"><div class="ctrl"><span>Mud Control</span><span class="val" id="mudV"></span></div><input id="mud" type="range" min="-6" max="4" value="-2"></div>
+<div class="control"><div class="ctrl"><span>Vocal Presence</span><span class="val" id="presenceV"></span></div><input id="presence" type="range" min="-4" max="5" value="1"></div>
+<div class="control"><div class="ctrl"><span>Air</span><span class="val" id="airV"></span></div><input id="air" type="range" min="-4" max="5" value="1"></div>
+</div>
+<div class="control"><div class="ctrl"><span>Gentle Vocal Compression</span><span class="val" id="compV"></span></div><input id="comp" type="range" min="0" max="60" value="20"></div>
+<p class="note">Start with Input Trim at −6 dB. If the original recording is already clipped, effects cannot fully restore it; record again with a lower input level.</p>
+</section>
+
+<section class="panel">
+<div class="panel-head"><span class="ico">03</span><h2>ADVANCED PING-PONG DELAY</h2><span class="pillinfo">REBUILT FEEDBACK ENGINE</span></div>
+<div class="switch"><span>Delay Engine ON / OFF</span><input id="delayOn" type="checkbox" checked></div>
+<div class="selectrow">Delay Mode <select id="mode"><option value="pingpong">PING-PONG · L ⇄ R</option><option value="center">CENTER ECHO</option></select></div>
+<div class="divider"></div>
+<div class="switch"><span>Sync Delay to Tempo</span><input id="sync" type="checkbox" checked></div>
+<div class="grid2">
+<div class="control"><div class="ctrl"><span>Tempo / BPM</span><span class="val" id="bpmV"></span></div><input id="bpm" type="range" min="50" max="200" value="92"></div>
+<div class="control"><div class="ctrl"><span>Tap Tempo</span><span class="val" id="tapV">TAP 4 TIMES</span></div><button class="gold" id="tap" style="width:100%">● TAP TEMPO</button></div>
+</div>
+<div class="selectrow" style="margin-top:11px">Note Division <select id="division">
+<option value="0.5">1/2 · HALF</option><option value="0.25" selected>1/4 · QUARTER</option>
+<option value="0.1875">1/8 DOTTED</option><option value="0.1666667">1/8 TRIPLET</option>
+<option value="0.125">1/8 · EIGHTH</option><option value="0.0625">1/16 · SIXTEENTH</option>
+<option value="0.0833333">1/16 TRIPLET</option>
+</select></div>
+<div class="control"><div class="ctrl"><span>Delay Time <span id="syncLabel" style="color:#69d5ac">(SYNCED)</span></span><span class="val" id="delayV"></span></div><input id="delay" type="range" min="50" max="1500" value="326"></div>
+<div class="control"><div class="ctrl"><span>Feedback · Repeat Strength</span><span class="val" id="feedbackV"></span></div><input id="feedback" type="range" min="0" max="90" value="42"></div>
+<div class="grid2">
+<div class="control"><div class="ctrl"><span>Delay Mix</span><span class="val" id="mixV"></span></div><input id="mix" type="range" min="0" max="100" value="34"></div>
+<div class="control"><div class="ctrl"><span>Stereo Width</span><span class="val" id="widthV"></span></div><input id="width" type="range" min="0" max="100" value="100"></div>
+</div>
+<div class="grid2">
+<div class="control"><div class="ctrl"><span>Feedback Low Cut</span><span class="val" id="fbLowV"></span></div><input id="fbLow" type="range" min="60" max="600" value="130"></div>
+<div class="control"><div class="ctrl"><span>Feedback High Cut</span><span class="val" id="fbHighV"></span></div><input id="fbHigh" type="range" min="1800" max="14000" step="100" value="8500"></div>
+</div>
+<p class="note">True feedback ping-pong: each left repeat feeds the right delay, and each right repeat feeds the left. The feedback filters progressively tame low and high frequencies so the tail softens instead of building harshly.</p>
+</section>
+
+<section class="panel">
+<div class="panel-head"><span class="ico">04</span><h2>ROOM REVERB</h2><span class="meta">SPACE & DEPTH</span></div>
+<div class="switch"><span>Reverb Engine ON / OFF</span><input id="reverbOn" type="checkbox" checked></div>
+<div class="control"><div class="ctrl"><span>Reverb Mix</span><span class="val" id="reverbV"></span></div><input id="reverb" type="range" min="0" max="45" value="12"></div>
+<div class="grid2">
+<div class="control"><div class="ctrl"><span>Room / Tail</span><span class="val" id="roomV"></span></div><input id="room" type="range" min="5" max="50" value="24"></div>
+<div class="control"><div class="ctrl"><span>Pre-Delay</span><span class="val" id="preV"></span></div><input id="pre" type="range" min="0" max="100" value="22"></div>
+</div>
+<div class="control"><div class="ctrl"><span>Reverb Damping</span><span class="val" id="dampV"></span></div><input id="damp" type="range" min="2500" max="12000" step="500" value="7500"></div>
+</section>
+
+
+<section class="panel" id="advancedPanel">
+<div class="panel-head"><span class="ico">06</span><h2>ADVANCED VOCAL TOOLS</h2><span class="meta">TONE SHAPING</span></div>
+<div class="selectrow">Reverb Type
+<select id="reverbType">
+<option value="room">ROOM</option><option value="hall">HALL</option>
+<option value="cathedral">CATHEDRAL</option><option value="plate">PLATE</option><option value="spring">SPRING</option>
+</select></div>
+<div class="grid2">
+<div class="control"><div class="ctrl"><span>Low Shelf · 120 Hz</span><span class="val" id="eq1V"></span></div><input id="eq1" type="range" min="-12" max="12" value="0"></div>
+<div class="control"><div class="ctrl"><span>Low Mid · 350 Hz</span><span class="val" id="eq2V"></span></div><input id="eq2" type="range" min="-12" max="12" value="0"></div>
+<div class="control"><div class="ctrl"><span>Mid · 1 kHz</span><span class="val" id="eq3V"></span></div><input id="eq3" type="range" min="-12" max="12" value="0"></div>
+<div class="control"><div class="ctrl"><span>High Mid · 3.5 kHz</span><span class="val" id="eq4V"></span></div><input id="eq4" type="range" min="-12" max="12" value="0"></div>
+<div class="control"><div class="ctrl"><span>High Shelf · 10 kHz</span><span class="val" id="eq5V"></span></div><input id="eq5" type="range" min="-12" max="12" value="0"></div>
+<div class="control"><div class="ctrl"><span>De-Esser Amount</span><span class="val" id="deessV"></span></div><input id="deess" type="range" min="0" max="100" value="0"></div>
+</div>
+<div class="control"><div class="ctrl"><span>Noise Gate / Room Noise Reduction</span><span class="val" id="gateV"></span></div><input id="gate" type="range" min="0" max="100" value="0"></div>
+<div class="control"><div class="ctrl"><span>Low-Pass Filter</span><span class="val" id="lpfV"></span></div><input id="lpf" type="range" min="5000" max="20000" step="500" value="20000"></div>
+
+<div class="row">
+<button id="resetAll" class="soft">↺ RESET CONTROLS</button>
+<button id="savePreset" class="soft">＋ SAVE CUSTOM PRESET</button>
+<select id="loadPreset"><option value="">LOAD SAVED PRESET</option></select>
+</div>
+<p class="note">Noise Gate reduces quiet background noise between phrases; it is not studio-grade spectral denoising. De-Esser is a frequency-selective dynamic control approximation.</p>
+</section>
+
+<section class="panel">
+<div class="panel-head"><span class="ico">05</span><h2>MASTER OUTPUT</h2><span class="meta">SAFE HEADROOM</span></div>
+<div class="control"><div class="ctrl"><span>Master Level</span><span class="val" id="masterV"></span></div><input id="master" type="range" min="-18" max="0" value="0"></div>
+<div class="actiongrid" style="margin-top:14px"><button class="gold" id="apply" disabled>▶ APPLY & PREVIEW</button><button id="export" disabled>⇩ EXPORT WAV</button></div>
+<div class="status" id="exportStatus">Export is captured after the safety limiter. Keep this page open until it finishes.</div>
+<p class="note">The final limiter helps control peaks, but cannot repair clipping already baked into the original recording. Avoid maxing input trim, feedback and reverb together.</p>
+</section>
+<div class="footer">FARRUH AUDIO TRACK · VOCAL STUDIO<br><span style="display:inline-block;margin-top:7px;color:#c9a66d;letter-spacing:1.2px">PRESENTED BY FARHAN RAZA QADRI BANGALORE</span></div>
+</main>
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const player=$('player'),canvas=$('scope'),cx=canvas.getContext('2d');
+let ctx=null,source=null,nodes=[],dest=null,analyser=null,raf=0;
+let fileUrl=null,micStream=null,micRecorder=null,micChunks=[],recorder=null,chunks=[],exporting=false,tapTimes=[];
+
+function node(n){nodes.push(n);return n;}
+function ensureContext(){
+ if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();
+ return ctx.state==='suspended'?ctx.resume():Promise.resolve();
+}
+function disconnectGraph(){
+ if(source){try{source.disconnect();}catch(e){}}
+ nodes.forEach(n=>{try{n.disconnect();}catch(e){}});
+ nodes=[];analyser=null;
+}
+function impulse(seconds){
+ const len=Math.max(1,Math.floor(ctx.sampleRate*seconds));
+ const b=ctx.createBuffer(2,len,ctx.sampleRate);
+ for(let c=0;c<2;c++){
+  const a=b.getChannelData(c);
+  for(let i=0;i<len;i++){
+   const t=i/len;
+   a[i]=(Math.random()*2-1)*Math.pow(1-t,3.1);
+  }
+ }
+ return b;
+}
+function selectedDelaySeconds(){
+ if($('sync').checked){
+  const bpm=+$('bpm').value,division=+$('division').value;
+  return (60/bpm)*4*division;
+ }
+ return +$('delay').value/1000;
+}
+function buildGraph(){
+ disconnectGraph();
+ const trim=node(ctx.createGain());trim.gain.value=Math.pow(10,(+$('trim').value)/20);
+ const hpf=node(ctx.createBiquadFilter());hpf.type='highpass';hpf.frequency.value=+$('hpf').value;hpf.Q.value=.707;
+ const warmth=node(ctx.createBiquadFilter());warmth.type='lowshelf';warmth.frequency.value=150;warmth.gain.value=+$('warm').value;
+ const mud=node(ctx.createBiquadFilter());mud.type='peaking';mud.frequency.value=320;mud.Q.value=1;mud.gain.value=+$('mud').value;
+ const presence=node(ctx.createBiquadFilter());presence.type='peaking';presence.frequency.value=3200;presence.Q.value=.85;presence.gain.value=+$('presence').value;
+ const air=node(ctx.createBiquadFilter());air.type='highshelf';air.frequency.value=9500;air.gain.value=+$('air').value;
+ const eqFilters=[];
+ const eqDefs=[['lowshelf',120,0],['peaking',350,1],['peaking',1000,1],['peaking',3500,1],['highshelf',10000,0]];
+ eqDefs.forEach((d,i)=>{const f=node(ctx.createBiquadFilter());f.type=d[0];f.frequency.value=d[1];if(d[2])f.Q.value=1;f.gain.value=+$('eq'+(i+1)).value;eqFilters.push(f);});
+ const deess=node(ctx.createBiquadFilter());deess.type='peaking';deess.frequency.value=6500;deess.Q.value=1.4;deess.gain.value=-(+$('deess').value)*.12;
+ const lpf=node(ctx.createBiquadFilter());lpf.type='lowpass';lpf.frequency.value=+$('lpf').value;lpf.Q.value=.707;
+ const gate=node(ctx.createDynamicsCompressor());const gateAmt=+$('gate').value/100;gate.threshold.value=-72+gateAmt*27;gate.knee.value=0;gate.ratio.value=1+gateAmt*18;gate.attack.value=.003;gate.release.value=.12;
+ const compAmount=+$('comp').value/100;
+ const comp=node(ctx.createDynamicsCompressor());
+ comp.threshold.value=-20-compAmount*12;comp.knee.value=20;
+ comp.ratio.value=1.2+compAmount*2.8;comp.attack.value=.012;comp.release.value=.22;
+ source.connect(trim);trim.connect(hpf);hpf.connect(warmth);warmth.connect(mud);mud.connect(presence);presence.connect(air);
+ let vocalChain=air;eqFilters.forEach(f=>{vocalChain.connect(f);vocalChain=f;});
+ vocalChain.connect(deess);deess.connect(lpf);lpf.connect(gate);gate.connect(comp);
+
+
+ const sum=node(ctx.createGain());
+ // Dry/wet uses equal-power gains to reduce level jumps as the mix is moved.
+ const delayMix=$('delayOn').checked?(+$('mix').value/100):0;
+ const dry=node(ctx.createGain());dry.gain.value=Math.cos(delayMix*Math.PI/2);
+ comp.connect(dry);dry.connect(sum);
+
+ if($('delayOn').checked && delayMix>0){
+  const mono=node(ctx.createGain());
+  mono.channelCount=1;mono.channelCountMode='explicit';mono.channelInterpretation='speakers';
+  comp.connect(mono);
+  const input=node(ctx.createGain());input.gain.value=1;
+  mono.connect(input);
+  const time=Math.max(.025,Math.min(5.8,selectedDelaySeconds()));
+  const delayL=node(ctx.createDelay(6));delayL.delayTime.value=time;
+  const delayR=node(ctx.createDelay(6));delayR.delayTime.value=time;
+  const hpL=node(ctx.createBiquadFilter());hpL.type='highpass';hpL.frequency.value=+$('fbLow').value;hpL.Q.value=.707;
+  const hpR=node(ctx.createBiquadFilter());hpR.type='highpass';hpR.frequency.value=+$('fbLow').value;hpR.Q.value=.707;
+  const lpL=node(ctx.createBiquadFilter());lpL.type='lowpass';lpL.frequency.value=+$('fbHigh').value;lpL.Q.value=.707;
+  const lpR=node(ctx.createBiquadFilter());lpR.type='lowpass';lpR.frequency.value=+$('fbHigh').value;lpR.Q.value=.707;
+  const fb=+$('feedback').value/100;
+  const feedbackL=node(ctx.createGain());feedbackL.gain.value=fb;
+  const feedbackR=node(ctx.createGain());feedbackR.gain.value=fb;
+  const panL=node(ctx.createStereoPanner()),panR=node(ctx.createStereoPanner());
+  const width=+$('width').value/100;
+  const ping=$('mode').value==='pingpong';
+  panL.pan.value=ping?-width:0;
+  panR.pan.value=ping?width:0;
+  const wet=node(ctx.createGain());wet.gain.value=Math.sin(delayMix*Math.PI/2);
+  input.connect(delayL);
+  delayL.connect(hpL);hpL.connect(lpL);
+  delayR.connect(hpR);hpR.connect(lpR);
+  // Each side feeds the opposite delay line for real alternating ping-pong repeats.
+  lpL.connect(feedbackL);feedbackL.connect(delayR);
+  lpR.connect(feedbackR);feedbackR.connect(delayL);
+  lpL.connect(panL);panL.connect(wet);
+  lpR.connect(panR);panR.connect(wet);
+  wet.connect(sum);
+ }
+
+ if($('reverbOn').checked && +$('reverb').value>0){
+  const pre=node(ctx.createDelay(.2));pre.delayTime.value=+$('pre').value/1000;
+  const con=node(ctx.createConvolver());
+  const rt=$('reverbType').value;
+  const scale={room:1,hall:1.55,cathedral:2.25,plate:1.25,spring:.85}[rt]||1;
+  con.buffer=impulse(Math.min(8,(+$('room').value/10)*scale));con.normalize=true;
+  const tone=node(ctx.createBiquadFilter());tone.type='lowpass';tone.frequency.value=+$('damp').value;tone.Q.value=.707;
+  const rvb=node(ctx.createGain());rvb.gain.value=(+$('reverb').value/100)*.55;
+  comp.connect(pre);pre.connect(con);con.connect(tone);tone.connect(rvb);rvb.connect(sum);
+ }
+ const master=node(ctx.createGain());master.gain.value=Math.pow(10,(+$('master').value)/20);
+ const makeup=node(ctx.createGain());
+ makeup.gain.value=Math.pow(10,4/20); // +4 dB loudness compensation before safety limiting
+ const limiter=node(ctx.createDynamicsCompressor());
+ limiter.threshold.value=-1.5;limiter.knee.value=0;limiter.ratio.value=20;
+ limiter.attack.value=.001;limiter.release.value=.16;
+ sum.connect(master);master.connect(makeup);makeup.connect(limiter);
+ analyser=node(ctx.createAnalyser());analyser.fftSize=1024;
+ limiter.connect(analyser);analyser.connect(ctx.destination);
+ dest=ctx.createMediaStreamDestination();limiter.connect(dest);
+ startMeter();
+}
+function startMeter(){
+ if(raf)cancelAnimationFrame(raf);
+ if(!analyser)return;
+ const timeData=new Uint8Array(analyser.fftSize),freqData=new Uint8Array(analyser.frequencyBinCount);
+ function draw(){
+  if(!analyser)return;
+  analyser.getByteTimeDomainData(timeData);analyser.getByteFrequencyData(freqData);
+  const w=canvas.width,h=canvas.height;
+  cx.clearRect(0,0,w,h);
+  cx.strokeStyle='#263842';cx.lineWidth=1;
+  for(let y=20;y<h;y+=20){cx.beginPath();cx.moveTo(0,y);cx.lineTo(w,y);cx.stroke();}
+  cx.beginPath();cx.lineWidth=2;cx.strokeStyle='#e3bd76';
+  for(let i=0;i<w;i++){const j=Math.floor(i/w*timeData.length);const y=h/2+((timeData[j]-128)/128)*h*.36;if(i===0)cx.moveTo(i,y);else cx.lineTo(i,y);}
+  cx.stroke();
+  let peak=0;for(let i=0;i<freqData.length;i++)if(freqData[i]>peak)peak=freqData[i];
+  $('levelText').textContent='LEVEL '+Math.round(peak/255*100)+'%';
+  [...$('bars').children].forEach((el,i)=>{const v=freqData[Math.floor(i/ $('bars').children.length*100)]||0;el.classList.toggle('on',v>20);});
+  raf=requestAnimationFrame(draw);
+ }
+ draw();
+}
+for(let i=0;i<36;i++)$('bars').appendChild(document.createElement('span'));
+
+function db(v){const n=+v;return(n>0?'+':'')+n+' dB';}
+function labels(){
+ const formats={
+ trim:db,hpf:v=>v+' Hz',warm:db,mud:db,presence:db,air:db,comp:v=>v+'%',
+ bpm:v=>v+' BPM',delay:v=>v+' ms',feedback:v=>v+'%',mix:v=>v+'%',width:v=>v+'%',
+ fbLow:v=>v+' Hz',fbHigh:v=>(v/1000).toFixed(1)+' kHz',
+ reverb:v=>v+'%',room:v=>(v/10).toFixed(1)+' s',pre:v=>v+' ms',damp:v=>(v/1000).toFixed(1)+' kHz',master:db,eq1:db,eq2:db,eq3:db,eq4:db,eq5:db,deess:v=>v+'%',gate:v=>v+'%',lpf:v=>(v/1000).toFixed(1)+' kHz'
+ };
+ Object.keys(formats).forEach(id=>$(id+'V').textContent=formats[id]($(id).value));
+ $('delayV').textContent=Math.round(selectedDelaySeconds()*1000)+' ms';
+ $('delay').disabled=$('sync').checked;
+ $('syncLabel').textContent=$('sync').checked?'(SYNCED)':'(MANUAL)';
+}
+function setStatus(s){$('status').textContent=s;}
+async function prepareGraph(){
+ if(!player.src)throw new Error('Import an audio file or record your voice first.');
+ await ensureContext();
+ if(!source)source=ctx.createMediaElementSource(player);
+ buildGraph();
+}
+async function preview(){
+ await prepareGraph();
+ if(player.ended)player.currentTime=0;
+ await player.play();
+ setStatus('Processed audio is playing. Listen for the left/right delay movement.');
+}
+$('file').addEventListener('change',e=>{
+ const f=e.target.files&&e.target.files[0];if(!f)return;
+ if(fileUrl)URL.revokeObjectURL(fileUrl);
+ fileUrl=URL.createObjectURL(f);player.src=fileUrl;player.load();
+ ['play','stop','apply','export'].forEach(id=>$(id).disabled=false);
+ $('micStatus').textContent='Imported: '+f.name;
+ setStatus('Audio loaded. Select a preset or adjust the delay engine.');
+});
+$('play').onclick=()=>preview().catch(e=>setStatus(e.message));
+$('apply').onclick=()=>preview().catch(e=>setStatus(e.message));
+$('stop').onclick=()=>{player.pause();player.currentTime=0;setStatus('Playback stopped.');};
+player.addEventListener('pause',()=>{if(!exporting)setStatus('Paused. Press Play Processed to listen again.');});
+
+$('micStart').onclick=async()=>{
+ try{
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)throw new Error('Microphone access is unavailable in this page. Open in Chrome with microphone permission, or import an audio file.');
+  micStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+  micChunks=[];
+  const opts={};
+  if(MediaRecorder.isTypeSupported('audio/webm;codecs=opus'))opts.mimeType='audio/webm;codecs=opus';
+  micRecorder=new MediaRecorder(micStream,opts);
+  micRecorder.ondataavailable=e=>{if(e.data&&e.data.size)micChunks.push(e.data);};
+  micRecorder.onstop=()=>{
+   const blob=new Blob(micChunks,{type:micRecorder.mimeType||'audio/webm'});
+   if(fileUrl)URL.revokeObjectURL(fileUrl);fileUrl=URL.createObjectURL(blob);
+   player.src=fileUrl;player.load();
+   ['play','stop','apply','export'].forEach(id=>$(id).disabled=false);
+   micStream.getTracks().forEach(t=>t.stop());micStream=null;
+   $('micStatus').textContent='Recording ready. Press Play Processed to hear your studio effects.';
+  };
+  micRecorder.start(250);
+  $('micStart').disabled=true;$('micStop').disabled=false;
+  $('micStatus').textContent='● Recording… Speak naturally and keep a steady distance from the microphone.';
+ }catch(e){$('micStatus').textContent=e.message||'Could not start microphone.';}
+};
+$('micStop').onclick=()=>{
+ if(micRecorder&&micRecorder.state==='recording')micRecorder.stop();
+ $('micStart').disabled=false;$('micStop').disabled=true;
+};
+
+const presets={
+ clean:{trim:-6,hpf:85,warm:0,mud:-3,presence:2,air:1,comp:18,delayOn:false,mode:'center',sync:true,bpm:92,division:'0.25',delay:326,feedback:25,mix:15,width:55,fbLow:150,fbHigh:7500,reverbOn:true,reverb:7,room:18,pre:20,damp:6500,master:-6},
+ naat:{trim:-6,hpf:70,warm:2,mud:-2,presence:2,air:1,comp:20,delayOn:true,mode:'pingpong',sync:true,bpm:92,division:'0.1875',delay:326,feedback:42,mix:32,width:92,fbLow:130,fbHigh:8200,reverbOn:true,reverb:12,room:26,pre:24,damp:7500,master:-7},
+ wide:{trim:-7,hpf:75,warm:1,mud:-2,presence:2,air:1,comp:18,delayOn:true,mode:'pingpong',sync:true,bpm:100,division:'0.125',delay:300,feedback:55,mix:40,width:100,fbLow:140,fbHigh:9000,reverbOn:true,reverb:9,room:22,pre:18,damp:8500,master:-8},
+ slap:{trim:-6,hpf:80,warm:1,mud:-2,presence:1,air:0,comp:15,delayOn:true,mode:'center',sync:false,bpm:92,division:'0.25',delay:115,feedback:18,mix:24,width:0,fbLow:160,fbHigh:7000,reverbOn:false,reverb:0,room:12,pre:8,damp:6500,master:-6}
+};
+document.querySelectorAll('[data-preset]').forEach(btn=>btn.addEventListener('click',()=>{
+ const p=presets[btn.dataset.preset];
+ Object.keys(p).forEach(id=>{if($(id).type==='checkbox')$(id).checked=p[id];else $(id).value=p[id];});
+ labels();
+ if(player.src&&source&&!player.paused)buildGraph();
+ setStatus(btn.dataset.preset.toUpperCase()+' preset loaded. Press Play Processed to hear it.');
+}));
+const sliders=['trim','hpf','warm','mud','presence','air','comp','bpm','delay','feedback','mix','width','fbLow','fbHigh','reverb','room','pre','damp','master','eq1','eq2','eq3','eq4','eq5','deess','gate','lpf'];
+sliders.forEach(id=>$(id).addEventListener('input',()=>{
+ labels();
+ if(player.src&&source&&!player.paused&&!exporting)buildGraph();
+}));
+['delayOn','mode','sync','division','reverbOn','reverbType'].forEach(id=>$(id).addEventListener('change',()=>{
+ labels();
+ if(player.src&&source&&!player.paused&&!exporting)buildGraph();
+}));
+$('tap').onclick=()=>{
+ const now=performance.now();
+ if(tapTimes.length&&now-tapTimes[tapTimes.length-1]>2200)tapTimes=[];
+ tapTimes.push(now);
+ if(tapTimes.length>5)tapTimes.shift();
+ if(tapTimes.length>=2){
+  const gaps=[];for(let i=1;i<tapTimes.length;i++)gaps.push(tapTimes[i]-tapTimes[i-1]);
+  const avg=gaps.reduce((a,b)=>a+b,0)/gaps.length;
+  const bpm=Math.max(50,Math.min(200,Math.round(60000/avg)));
+  $('bpm').value=bpm;$('tapV').textContent=bpm+' BPM';
+  labels();if(player.src&&source&&!player.paused&&!exporting)buildGraph();
+ }else $('tapV').textContent='TAP AGAIN';
+};
+
+function wavBlob(buffer){
+ const channels=buffer.numberOfChannels,frames=buffer.length,sampleRate=buffer.sampleRate,block=channels*2;
+ const ab=new ArrayBuffer(44+frames*block),v=new DataView(ab);
+ const write=(o,s)=>{for(let i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i));};
+ write(0,'RIFF');v.setUint32(4,36+frames*block,true);write(8,'WAVE');write(12,'fmt ');
+ v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,channels,true);
+ v.setUint32(24,sampleRate,true);v.setUint32(28,sampleRate*block,true);
+ v.setUint16(32,block,true);v.setUint16(34,16,true);write(36,'data');v.setUint32(40,frames*block,true);
+ const data=[];for(let c=0;c<channels;c++)data.push(buffer.getChannelData(c));
+ let offset=44;
+ for(let i=0;i<frames;i++)for(let c=0;c<channels;c++){
+  const x=Math.max(-1,Math.min(1,data[c][i]));
+  v.setInt16(offset,x<0?x*32768:x*32767,true);offset+=2;
+ }
+ return new Blob([ab],{type:'audio/wav'});
+}
+function saveBlob(blob,name){
+ const url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),6000);
+}
+$('export').onclick=async()=>{
+ try{
+  if(exporting)return;
+  await prepareGraph();
+  if(!window.MediaRecorder)throw new Error('Audio export is not supported in this browser. Try Chrome.');
+  exporting=true;$('export').disabled=true;$('apply').disabled=true;
+  player.pause();player.currentTime=0;chunks=[];
+  const opts={};
+  if(MediaRecorder.isTypeSupported('audio/webm;codecs=opus'))opts.mimeType='audio/webm;codecs=opus';
+  else if(MediaRecorder.isTypeSupported('audio/webm'))opts.mimeType='audio/webm';
+  recorder=new MediaRecorder(dest.stream,opts);
+  recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
+  recorder.onstop=async()=>{
+   try{
+    const blob=new Blob(chunks,{type:recorder.mimeType||'audio/webm'});
+    const decoded=await ctx.decodeAudioData(await blob.arrayBuffer());
+    saveBlob(wavBlob(decoded),'Farruh-Audio-Track-Studio-V7.wav');
+    $('exportStatus').textContent='Processed WAV exported from the post-limiter signal.';
+   }catch(err){
+    saveBlob(new Blob(chunks,{type:recorder.mimeType||'audio/webm'}),'Farruh-Audio-Track-Studio-V7.webm');
+    $('exportStatus').textContent='This browser could not convert the recording to WAV; processed WebM was saved instead.';
+   }
+   exporting=false;$('export').disabled=false;$('apply').disabled=false;
+  };
+  recorder.start(250);await player.play();
+  $('exportStatus').textContent='Exporting processed audio… keep this page open until playback and the delay/reverb tail finish.';
+  player.onended=()=>{
+   const fb=Math.max(.05,+$('feedback').value/100);
+   const repeats=Math.min(14,Math.max(2,Math.ceil(Math.log(.001)/Math.log(fb))));
+   const delay=selectedDelaySeconds();
+   const tail=Math.max(1800,Math.min(12000,delay*repeats*1000+(+$('room').value)*100));
+   setTimeout(()=>{if(recorder&&recorder.state==='recording')recorder.stop();},tail);
+  };
+ }catch(e){
+  exporting=false;$('export').disabled=false;$('apply').disabled=false;
+  $('exportStatus').textContent=e.message||'Export could not start.';
+ }
+};
+
+const extraPresets={
+ "Clean Studio":{delayOn:false,reverb:5,room:18,eq1:0,eq2:-1,eq3:1,eq4:1,eq5:1,deess:25,gate:18},
+ "Warm Naat":{delayOn:true,mode:"pingpong",sync:true,bpm:92,division:"0.1875",feedback:38,mix:30,width:95,reverb:12,room:28,reverbType:"hall",eq1:2,eq2:-2,eq3:1,eq4:2,eq5:1,deess:28,gate:10},
+ "Deep Echo":{delayOn:true,mode:"pingpong",sync:true,division:"0.25",feedback:58,mix:38,width:100,reverb:8,room:22,reverbType:"hall",eq1:1,eq2:-2,eq3:0,eq4:1,eq5:0},
+ "Wide Stereo":{delayOn:true,mode:"pingpong",sync:true,division:"0.125",feedback:48,mix:35,width:100,reverb:8,room:20,reverbType:"plate"},
+ "Madina Hall":{delayOn:true,mode:"pingpong",sync:true,division:"0.1875",feedback:34,mix:25,width:85,reverb:20,room:42,reverbType:"cathedral"},
+ "Soft Vocal":{delayOn:false,reverb:8,room:20,reverbType:"room",comp:12,eq1:1,eq2:-1,eq3:1,eq4:0,eq5:0,deess:35,gate:12},
+ "Mehfil Reverb":{delayOn:true,mode:"center",sync:false,delay:240,feedback:24,mix:18,width:30,reverb:24,room:38,reverbType:"hall"},
+ "Professional Naat":{delayOn:true,mode:"pingpong",sync:true,bpm:92,division:"0.1875",feedback:40,mix:30,width:95,reverb:13,room:30,reverbType:"plate",comp:22,eq1:1,eq2:-2,eq3:1,eq4:2,eq5:1,deess:30,gate:12}
+};
+Object.entries(extraPresets).forEach(([name,p])=>{
+ const b=document.createElement('button');b.textContent=name.toUpperCase();b.dataset.extraPreset=name;
+ b.addEventListener('click',()=>{Object.entries(p).forEach(([k,v])=>{if($(k)){if($(k).type==='checkbox')$(k).checked=v;else $(k).value=v;}});labels();setStatus(name+' preset loaded. Press Play Processed.');});
+ $('advancedPanel').querySelector('.row').before(b);
+});
+function saved(){try{return JSON.parse(localStorage.getItem('farruhV7Presets')||'{}')}catch(e){return {}}}
+function refreshSaved(){const s=saved(),sel=$('loadPreset');sel.innerHTML='<option value="">LOAD SAVED PRESET</option>';Object.keys(s).forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;sel.appendChild(o);});}
+$('savePreset').onclick=()=>{const name=prompt('Custom preset name?');if(!name)return;const p={};['trim','hpf','warm','mud','presence','air','comp','bpm','division','delay','feedback','mix','width','fbLow','fbHigh','reverb','room','pre','damp','master','eq1','eq2','eq3','eq4','eq5','deess','gate','lpf','reverbType','mode','sync','delayOn','reverbOn'].forEach(k=>{if($(k))p[k]=$(k).type==='checkbox'?$(k).checked:$(k).value;});const s=saved();s[name]=p;localStorage.setItem('farruhV7Presets',JSON.stringify(s));refreshSaved();$('loadPreset').value=name;};
+$('loadPreset').onchange=()=>{const p=saved()[$('loadPreset').value];if(!p)return;Object.entries(p).forEach(([k,v])=>{if($(k)){if($(k).type==='checkbox')$(k).checked=v;else $(k).value=v;}});labels();setStatus('Saved custom preset loaded.');};
+$('resetAll').onclick=()=>{document.querySelectorAll('input[type=range]').forEach(x=>x.value=x.defaultValue);document.querySelectorAll('input[type=checkbox]').forEach(x=>x.checked=x.defaultChecked);$('reverbType').value='room';$('mode').value='pingpong';$('sync').checked=true;$('division').value='0.25';labels();setStatus('Controls reset to defaults.');};
+refreshSaved();
+labels();
+})();
+</script>
+</body>
+</html>
